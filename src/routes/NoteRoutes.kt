@@ -22,7 +22,7 @@ const val NOTE = "/notes/{id}"
 class NotesRoute
 
 @Location(NOTE)
-class NoteRoute(val id: Int)
+class NoteRoute(val id: String)
 
 
 @KtorExperimentalLocationsAPI
@@ -63,7 +63,7 @@ fun Route.noteRoutes(db: Repo) {
                 call.respond(HttpStatusCode.BadRequest, SimpleResponse(false, "Missing Fields"))
                 return@put
             }
-
+            
             try {
                 val userID = call.principal<User>()!!.id
                 db.updateNote(note, userID)

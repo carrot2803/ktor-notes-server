@@ -37,6 +37,11 @@ fun Route.authRoutes(db: Repo, jwtService: JWTService, hashFunction: (String) ->
         }
 
         try {
+            val existingUser = db.findUserByEmail(registerRequest.email)
+            if (existingUser != null) {
+                call.respond(HttpStatusCode.Conflict, SimpleResponse(false, "Email already exists"))
+                return@post
+            }
             val user = User(registerRequest.email, registerRequest.username, hashFunction(registerRequest.password))
             db.addUser(user)
             call.respond(HttpStatusCode.OK, SimpleResponse(true, jwtService.generateToken(user)))

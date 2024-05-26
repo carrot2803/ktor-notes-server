@@ -44,10 +44,11 @@ class Repo {
     suspend fun addNote(note: Note, userID: Int) {
         dbQuery {
             NoteTable.insert { nt ->
+                nt[NoteTable.id] = note.id
                 nt[NoteTable.userID] = userID
-                nt[title] = note.title
-                nt[description] = note.description
-                nt[date] = note.date
+                nt[NoteTable.title] = note.title
+                nt[NoteTable.description] = note.description
+                nt[NoteTable.date] = note.date
             }
         }
     }
@@ -62,7 +63,7 @@ class Repo {
         }
     }
 
-    suspend fun deleteNote(id: Int, userID: Int) {
+    suspend fun deleteNote(id: String, userID: Int) {
         dbQuery {
             NoteTable.deleteWhere { NoteTable.userID.eq(userID) and NoteTable.id.eq(id) }
         }
@@ -71,7 +72,6 @@ class Repo {
     private fun rowToNote(row: ResultRow?): Note? {
         if (row == null)
             return null
-        println(NoteTable.userID)
         return Note(row[NoteTable.id], row[NoteTable.title], row[NoteTable.description], row[NoteTable.date])
     }
 }
