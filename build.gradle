@@ -49,3 +49,11 @@ dependencies {
     implementation "org.postgresql:postgresql:$postgres_version"
     implementation "com.zaxxer:HikariCP:$hikari_version"
 }
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
