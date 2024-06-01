@@ -1,7 +1,7 @@
 # Ktor-Notes-Server
 
-Backend kotlin server for [Android-Notes-Client](https://github.com/carrot2803/android-notes-client.git).  
-The server is built using the Ktor framework which connects to a postgresql database
+Backend kotlin server for [Android-Notes-Client](https://github.com/carrot2803/android-notes-client.git) .The server is
+built using the Ktor framework which connects to a postgresql database
 
 ## App Availability
 
